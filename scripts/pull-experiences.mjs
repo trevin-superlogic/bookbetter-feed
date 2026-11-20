@@ -149,6 +149,12 @@ async function main() {
         .filter((u) => u.startsWith(origin) && DETAIL_PATTERN.test(new URL(u).pathname))
         .slice(0, MAX_ITEMS)
     console.log("Listing read. Experience pages found: " + detailUrls.length)
+    if (DEBUG_DIR) {
+        const paths = [...new Set(candidates.map((u) => { try { const x = new URL(u, origin); return x.origin === origin ? x.pathname : "" } catch { return "" } }).filter(Boolean))]
+        console.log("Listing text length: " + String(listing.content || "").length)
+        console.log("Same-site link paths seen: " + (paths.slice(0, 60).join("  ") || "none"))
+        console.log("Listing text, first 3000 characters:\n" + String(listing.content || "").slice(0, 3000))
+    }
 
     const items = []
     for (const [i, url] of detailUrls.entries()) {
