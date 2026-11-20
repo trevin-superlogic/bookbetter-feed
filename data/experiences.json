@@ -4,7 +4,7 @@
   "items": [
     {
       "title": "Monaco Grand Prix",
-      "kind": "Motorsport",
+      "kind": "Sports",
       "meta": "Monaco Harbour, Monaco",
       "image": "https://assets.superlogic.com/bb780e1c-7175-4a34-bf05-007af8caa0d1.jpg",
       "points": [
@@ -14,22 +14,22 @@
     },
     {
       "title": "Exclusive Ferrari Team Paddock Experience",
-      "kind": "Motorsport",
+      "kind": "Sports",
       "meta": "Yas Marina Circuit · December 4–6, 2026",
       "image": "https://assets.superlogic.com/eae1928c-8b5f-4f05-b5e3-a6d42f7a40e5.jpg",
       "points": [
         "Ferrari team hospitality above the pit lane with race viewing",
-        "Ticket for One"
+        "Open bar throughout the hospitality experience"
       ]
     },
     {
       "title": "The Ultimate Private 17-Course Omakase Experience with Sake",
-      "kind": "Dining",
+      "kind": "Culinary",
       "meta": "",
       "image": "https://assets.superlogic.com/a74e2214-437d-4ffe-8a95-b096898c879e.jpg",
       "points": [
-        "This is for 8 Guests",
-        "A dedicated sushi chef providing one-on-one engagement and storytelling throughout the…"
+        "A dedicated sushi chef providing one-on-one engagement and storytelling throughout the…",
+        "Curated 17-course omakase tasting menu featuring premium seasonal fish sourced from Japan…"
       ]
     },
     {
@@ -38,8 +38,8 @@
       "meta": "",
       "image": "https://assets.superlogic.com/jet-gp.jpeg",
       "points": [
-        "Chasing the ultimate adrenaline rush?",
-        "The Fly a Fighter Jet Experience delivers just that and more."
+        "Strap in for the ride of a lifetime as you pilot a real L-29 fighter jet, hitting mind…",
+        "Your adventure begins at a former communist air base, where you'll receive a…"
       ]
     },
     {
@@ -48,8 +48,8 @@
       "meta": "",
       "image": "https://assets.superlogic.com/ANTARCTICA-adventure-gp.jpg",
       "points": [
-        "3-Day Arctic Adventure for Two: Discover the spectacular landscapes and natural wonders…",
-        "Scenic Arctic Route: Travel from Tromsø to Polar Park, surrounded by breathtaking fjords…"
+        "3-Day Arctic Adventure for Two",
+        "Scenic Arctic Route"
       ]
     },
     {
@@ -58,38 +58,38 @@
       "meta": "Motek, Sixth Avenue at 57th Street, New York City",
       "image": "https://assets.superlogic.com/640786ac-34ea-4ce5-a063-aa580c52d8cd.jpg",
       "points": [
-        "Experience for two guests",
-        "Prime location along the Macy’s Thanksgiving Day Parade route"
+        "Convenient access from Sixth Avenue and 57th Street",
+        "Easy access to the excitement of the Parade"
       ]
     },
     {
       "title": "Exclusive Table At The 2027 Grand Prix Ball",
-      "kind": "Motorsport",
+      "kind": "Sports",
       "meta": "",
       "image": "https://assets.superlogic.com/62b5e735-2495-46f3-9e33-f8c2228715a4.jpg",
       "points": [
-        "Table for 10 guests",
-        "Champagne reception"
+        "Champagne reception",
+        "Three-course dinner"
       ]
     },
     {
       "title": "Masters Golf Tournament for Two",
-      "kind": "Sport",
+      "kind": "Sports",
       "meta": "Augusta National Golf Club",
       "image": "https://assets.superlogic.com/ed27390a-bdd5-42c2-a6cf-fb5de86fc683.jpg",
       "points": [
-        "Two nights of accommodations for two at the Fairfield by Marriott in Augusta or a similar…",
-        "Monday and Tuesday night stay"
+        "Two tickets to Tuesday's Masters Practice Round",
+        "Two tickets to Wednesday's Par 3 Contest"
       ]
     },
     {
       "title": "Calgary Stampede Three Night Experience for Two",
-      "kind": "Experience",
+      "kind": "Sports",
       "meta": "Calgary, Alberta, Canada",
       "image": "https://assets.superlogic.com/dd0ddca6-b3ed-4903-a0ea-d845aa34b88c.jpg",
       "points": [
-        "Four days / three nights of accommodations for two in Calgary",
-        "Daily breakfast and all hotel taxes"
+        "Two Grandstand tickets to two days of rodeo competition",
+        "Two Grandstand tickets to one evening show featuring the GMC Rangeland Derby and…"
       ]
     }
   ]
