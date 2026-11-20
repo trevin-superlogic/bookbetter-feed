@@ -7,11 +7,6 @@ on:
   schedule:
     - cron: "17 9 * * *" # daily, 09:17 UTC
   workflow_dispatch:
-    inputs:
-      debug:
-        description: "Save the raw page text as a private artifact (contains prices)"
-        type: boolean
-        default: false
 
 permissions:
   contents: write
@@ -37,17 +32,7 @@ jobs:
           JINA_API_KEY: ${{ secrets.JINA_API_KEY }}
           BLOCKLIST: ${{ secrets.EXPERIENCES_BLOCKLIST }}
           DETAIL_PATTERN: ${{ vars.EXPERIENCES_DETAIL_PATTERN }}
-          DEBUG_DIR: ${{ inputs.debug && 'debug-raw' || '' }}
         run: node scripts/pull-experiences.mjs
-
-      - name: Upload raw text for tuning
-        if: ${{ always() && inputs.debug }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: experiences-raw
-          path: debug-raw
-          retention-days: 3
-          if-no-files-found: ignore
 
       - name: Commit if changed
         run: |
