@@ -22,6 +22,7 @@ import { dirname, join } from "node:path"
 const SOURCE_URL = process.env.SOURCE_URL
 const JINA_BASE = process.env.JINA_BASE || "https://r.jina.ai/"
 const DETAIL_PATTERN = new RegExp(process.env.DETAIL_PATTERN || "/experiences?/[^/?#]+/?$", "i")
+const CATEGORY_PATTERN = new RegExp(process.env.CATEGORY_PATTERN || "/category/([a-z0-9-]+)/?$", "i")
 const BLOCKLIST = (process.env.BLOCKLIST || "").split(",").map((s) => s.trim()).filter(Boolean)
 const MAX_ITEMS = Number(process.env.MAX_ITEMS || 9)
 const MAX_POINTS = Number(process.env.MAX_POINTS || 2)
@@ -31,6 +32,13 @@ const DEBUG_DIR = process.env.DEBUG_DIR || ""
 const PRICE = /[$€£¥]\s?\d|\d[\d,.]*\s?(usd|eur|gbp|usdc|usdt|btc|eth|cro)\b|\b(price|priced|pricing|per person|pp|from \d|cost|fee|deposit|refund)\b/i
 const INCLUDED_HEADING = /(what.?s included|includes?|included|what you get|your experience|the experience|highlights|package)/i
 const SKIP_IMAGE = /(logo|icon|avatar|favicon|sprite|badge|flag|placeholder)|\.svg(\?|$)/i
+const NOISE = /^(this (is|experience is) )?(for|ticket for|experience for|package for|valid for) (one|two|three|four|\d+)( guests?| people| persons?)?\.?$/i
+const HYPE = /\?$|\b(ultimate|just that|and more|unforgettable|once[- ]in[- ]a[- ]lifetime|look no further|imagine)\b/i
+const STRONG = /\b(access|hospitality|paddock|viewing|chef|meet|private|hosted|host|vip|suite|seats?|tickets?|badges?|reception|tour|course|tasting|flight|backstage|pit lane)\b/i
+const WEAK = /\b(accommodations?|night stay|nights? of|hotel|taxes|breakfast|transfers?|concierge|gift)\b/i
+const weight = (t) => (STRONG.test(t) ? 1 : 0) - (WEAK.test(t) ? 1 : 0)
+/** "Scenic route: travel from A to B" reads better as its label when the label says enough. */
+const label = (t) => { const m = t.match(/^([^:]{12,60}):\s+\S/); return m ? m[1] : t }
 const KINDS = [
     ["Motorsport", /\b(f1|formula|grand prix|paddock|race|racing|motogp|nascar|indycar|pit lane)\b/i],
     ["Music", /\b(concert|artist|tour|festival|studio|song|backstage|soundcheck|dj|band|album)\b/i],
@@ -100,13 +108,13 @@ export function points(markdown) {
             current.items.push(line.replace(/^\s*([-*+•]|\d+[.)])\s+/, ""))
         } else if (line.trim() && current && current.items.length) current = null
     }
-    const usable = (items) => items.map(scrub).filter((t) => t.length > 12 && t.length < 400 && !PRICE.test(t) && !/^(home|log ?in|sign ?up|menu|terms|privacy|contact|share|book now)/i.test(t))
+    const usable = (items) => items.map(scrub).map(label).filter((t) => t.length > 12 && t.length < 400 && !PRICE.test(t) && !NOISE.test(t) && !/^(home|log ?in|sign ?up|menu|terms|privacy|contact|share|book now)/i.test(t)).sort((a, b) => weight(b) - weight(a))
     const preferred = lists.find((l) => INCLUDED_HEADING.test(l.heading) && usable(l.items).length)
     const fallback = lists.map((l) => usable(l.items)).filter((u) => u.length >= 2).sort((a, b) => b.length - a.length)[0]
     let picked = preferred ? usable(preferred.items) : fallback || []
     if (!picked.length) {
         const prose = lines.filter((l) => !isHeading(l) && !isItem(l) && plain(l).length > 60).map(scrub).join(" ")
-        picked = (prose.match(/[^.!?]+[.!?]/g) || []).map((s) => s.trim()).filter((s) => s.length > 30 && !PRICE.test(s))
+        picked = (prose.match(/[^.!?]+[.!?]/g) || []).map((s) => s.trim()).filter((s) => s.length > 30 && !PRICE.test(s) && !HYPE.test(s))
     }
     return [...new Set(picked)].slice(0, MAX_POINTS).map((t) => clip(t))
 }
@@ -145,15 +153,28 @@ async function main() {
         ...pairs(listing.links).map(([, url]) => url),
         ...[...String(listing.content || "").matchAll(/\]\((https?:\/\/[^)\s]+|\/[^)\s]+)\)/g)].map((m) => m[1]),
     ]
-    const detailUrls = [...new Set(candidates.map((u) => { try { return new URL(u, origin).href.split("#")[0] } catch { return "" } }))]
-        .filter((u) => u.startsWith(origin) && DETAIL_PATTERN.test(new URL(u).pathname))
-        .slice(0, MAX_ITEMS)
+    const all = [...new Set(candidates.map((u) => { try { return new URL(u, origin).href.split("#")[0] } catch { return "" } }))].filter((u) => u.startsWith(origin))
+    const detailUrls = all.filter((u) => DETAIL_PATTERN.test(new URL(u).pathname)).slice(0, MAX_ITEMS)
     console.log("Listing read. Experience pages found: " + detailUrls.length)
     if (DEBUG_DIR) {
         const paths = [...new Set(candidates.map((u) => { try { const x = new URL(u, origin); return x.origin === origin ? x.pathname : "" } catch { return "" } }).filter(Boolean))]
         console.log("Listing text length: " + String(listing.content || "").length)
         console.log("Same-site link paths seen: " + (paths.slice(0, 60).join("  ") || "none"))
         console.log("Listing text, first 3000 characters:\n" + String(listing.content || "").slice(0, 3000))
+    }
+
+    // Category pages tell us what kind each experience is.
+    const kinds = {}
+    for (const cu of all.filter((u) => CATEGORY_PATTERN.test(new URL(u).pathname)).slice(0, 8)) {
+        try {
+            const name = new URL(cu).pathname.match(CATEGORY_PATTERN)[1].replace(/-/g, " ")
+            const page = await read(cu)
+            const found = [...pairs(page.links).map(([, url]) => url), ...[...String(page.content || "").matchAll(/\]\((https?:\/\/[^)\s]+|\/[^)\s]+)\)/g)].map((m) => m[1])]
+            for (const u of found) { try { const href = new URL(u, origin).href.split("#")[0]; if (!kinds[href]) kinds[href] = name.charAt(0).toUpperCase() + name.slice(1) } catch {} }
+        } catch (err) {
+            console.log("Skipped a category page: " + err.message)
+        }
+        await sleep(1500)
     }
 
     const items = []
@@ -164,7 +185,7 @@ async function main() {
             const t = title(page)
             if (!t || PRICE.test(t)) { console.log("Skipped page " + (i + 1) + ": no usable title"); continue }
             const p = points(page.content)
-            items.push({ title: t, kind: kind(t + " " + p.join(" ")), meta: meta(page.content), image: image(page), points: p })
+            items.push({ title: t, kind: kinds[url] || kind(t + " " + p.join(" ")), meta: meta(page.content), image: image(page), points: p })
             console.log("Read " + (i + 1) + "/" + detailUrls.length + ": " + t + " (" + p.length + " bullets)")
         } catch (err) {
             console.log("Skipped page " + (i + 1) + ": " + err.message)
