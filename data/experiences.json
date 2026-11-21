@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-20",
+  "asOf": "2026-11-21",
   "count": 9,
   "items": [
     {
@@ -27,10 +27,7 @@
       "kind": "Culinary",
       "meta": "",
       "image": "https://assets.superlogic.com/a74e2214-437d-4ffe-8a95-b096898c879e.jpg",
-      "points": [
-        "A dedicated sushi chef providing one-on-one engagement and storytelling throughout the…",
-        "Curated 17-course omakase tasting menu featuring premium seasonal fish sourced from Japan…"
-      ]
+      "points": []
     },
     {
       "title": "Fly a Fighter Jet Experience for One Guest",
@@ -55,12 +52,9 @@
     {
       "title": "YVP Thanksgiving Parade Viewing Brunch at Motek for Two",
       "kind": "Experience",
-      "meta": "Motek, Sixth Avenue at 57th Street, New York City",
+      "meta": "",
       "image": "https://assets.superlogic.com/640786ac-34ea-4ce5-a063-aa580c52d8cd.jpg",
-      "points": [
-        "Convenient access from Sixth Avenue and 57th Street",
-        "Easy access to the excitement of the Parade"
-      ]
+      "points": []
     },
     {
       "title": "Exclusive Table At The 2027 Grand Prix Ball",
