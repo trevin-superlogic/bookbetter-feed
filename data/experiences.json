@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-21",
+  "asOf": "2026-11-22",
   "count": 9,
   "items": [
     {
@@ -27,17 +27,17 @@
       "kind": "Culinary",
       "meta": "",
       "image": "https://assets.superlogic.com/a74e2214-437d-4ffe-8a95-b096898c879e.jpg",
-      "points": []
+      "points": [
+        "A dedicated sushi chef providing one-on-one engagement and storytelling throughout the…",
+        "Curated 17-course omakase tasting menu featuring premium seasonal fish sourced from Japan…"
+      ]
     },
     {
       "title": "Fly a Fighter Jet Experience for One Guest",
       "kind": "Experience",
       "meta": "",
       "image": "https://assets.superlogic.com/jet-gp.jpeg",
-      "points": [
-        "Strap in for the ride of a lifetime as you pilot a real L-29 fighter jet, hitting mind…",
-        "Your adventure begins at a former communist air base, where you'll receive a…"
-      ]
+      "points": []
     },
     {
       "title": "Arctic Circle Adventure for Two",
@@ -50,11 +50,14 @@
       ]
     },
     {
-      "title": "YVP Thanksgiving Parade Viewing Brunch at Motek for Two",
+      "title": "The request could not be satisfied",
       "kind": "Experience",
       "meta": "",
-      "image": "https://assets.superlogic.com/640786ac-34ea-4ce5-a063-aa580c52d8cd.jpg",
-      "points": []
+      "image": "",
+      "points": [
+        "We can't connect to the server for this app or website at this time.",
+        "There might be too much traffic or a configuration error."
+      ]
     },
     {
       "title": "Exclusive Table At The 2027 Grand Prix Ball",
