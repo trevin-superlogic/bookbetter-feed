@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-11-23",
+  "asOf": "2026-11-25",
   "count": 9,
   "items": [
     {
@@ -65,12 +65,9 @@
     {
       "title": "Masters Golf Tournament for Two",
       "kind": "Sports",
-      "meta": "Augusta National Golf Club",
+      "meta": "",
       "image": "https://assets.superlogic.com/ed27390a-bdd5-42c2-a6cf-fb5de86fc683.jpg",
-      "points": [
-        "Two tickets to Tuesday's Masters Practice Round",
-        "Two tickets to Wednesday's Par 3 Contest"
-      ]
+      "points": []
     },
     {
       "title": "Calgary Stampede Three Night Experience for Two",
@@ -88,7 +85,8 @@
       "meta": "",
       "image": "https://assets.superlogic.com/db570030-e194-43b3-814d-d7c866e9c146.jpg",
       "points": [
-        "Reef View Hotel, 12 Resort Dr, Whitsundays, QLD 4803, Australia © 2026."
+        "3 days / 2 nights accommodations at the Reef View Hotel on Hamilton Island, featuring a…",
+        "Great Barrier Reef Snorkeling Adventure"
       ]
     }
   ]
